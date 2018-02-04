@@ -31,7 +31,7 @@ function addUser (newUser, testDb) {
 
 function deleteUser (deleteUser, testDb) {
   const db = testDb || connection
-  return db('users').delete({id:deleteUser.id, name: deleteUser.name, email: deleteUser.email})
+  return db('users').delete({id:deleteUser.id, name: deleteUser.name, email: deleteUser.email}).where('id', deleteUser.id)
 }
 
 // function addUser (newUser, testDb) {
