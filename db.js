@@ -6,7 +6,8 @@ module.exports = {
   getUsers,
   getUser,
   addUser,
-  deleteUser
+  deleteUser,
+  updateUser
 }
 
 function getUsers (testDb) {
@@ -22,20 +23,15 @@ function getUser (id, testDb) {
 function addUser (newUser, testDb) {
   const db = testDb || connection
   console.log(newUser)
-  return db('users').insert({name: newUser.name, email: newUser.email})
+  return db('users').insert(newUser)
 }
 
-
-
-
-
-function deleteUser (deleteUser, testDb) {
+function deleteUser (id, testDb) {
   const db = testDb || connection
-  return db('users').delete({id:deleteUser.id, name: deleteUser.name, email: deleteUser.email}).where('id', deleteUser.id)
+  return db('users').where('id', id).del()
 }
 
-// function addUser (newUser, testDb) {
-//   const db = testDb || connection
-//   console.log(newUser)
-//   return db('users').insert({name: newUser.name, email: newUser.email})
-// }
+function updateUser (id, updateUser, testDb) {
+  const db = testDb || connection
+  return db('users').update(updateUser).where('id', id)
+}

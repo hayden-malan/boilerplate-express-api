@@ -26,10 +26,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', function (req, res) {
-  var newUser = {
-    name:  req.body.user.name,
-    email: req.body.user.email
-  }
+  var newUser = req.body.user
 
   db.addUser(newUser)
     .then( (userIds) => {
@@ -44,17 +41,32 @@ router.post('/', function (req, res) {
 
 
 router.delete('/:id', function (req, res) {
-  var deleteUser = {
-    id: req.params.id,
-  }
+  var id = Number(req.params.id)
 
-  db.deleteUser(deleteUser)
+  db.deleteUser(id)
   .then(users => {
     res.json({yayMessage: "You sucessfully deleted the user"})
   })
     .catch( err => {
       console.error(err.message)
       res.status(500).send("Couldn't delete this user.")
+    })
+})
+
+
+
+router.put('/:id', function (req, res) {
+  var updateUser = req.body.user
+    var id = Number(req.params.id)
+  db.updateUser(id, updateUser)
+  .then(users => {
+    db.getUser(id)
+      .then(user => res.json({user})
+      )
+  })
+    .catch( err => {
+      console.error(err.message)
+      res.status(500).send("Couldn't update this user.")
     })
 })
 
