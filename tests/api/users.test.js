@@ -10,7 +10,11 @@ jest.mock('../../db', () => ({
   getUsers: () => Promise.resolve([
     {id: 2, name: 'test user 2', email: 'test2@user.nz'},
     {id: 4, name: 'test user 4', email: 'test4@user.nz'}
-  ])
+  ]),
+
+  delete: (id) => Promise.resolve(
+    {yayMessage: "You sucessfully deleted the user"}
+  ),
 }))
 
 test('/users returns all users', () => {
@@ -42,3 +46,23 @@ test('/users/:id returns a user by ID', () => {
     })
 })
 
+test('/users/:id delete a user working', () => {
+  const expected = "You sucessfully deleted the user"
+
+  return request(server)
+    .get('/users/:99906')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then(res => {
+      expect(res.body.yayMessage).toBe(expected)
+    })
+
+    .catch(err => {
+      expect(err).toBeFalsy()
+    })
+})
+// {
+//          "id": 99906,
+//          "name": "Fascinated Flying Fox",
+//          "email": "flying.fox@example.org"
+//      },

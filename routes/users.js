@@ -39,10 +39,11 @@ router.post('/', function (req, res) {
 })
 
 
-
+//request
 router.delete('/:id', function (req, res) {
   var id = Number(req.params.id)
 
+//mock
   db.deleteUser(id)
   .then(users => {
     res.json({yayMessage: "You sucessfully deleted the user"})
