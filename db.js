@@ -5,7 +5,8 @@ const connection = require('knex')(config)
 module.exports = {
   getUsers,
   getUser,
-  addUser
+  addUser,
+  updateUser
 }
 
 function getUsers (testDb) {
@@ -20,7 +21,13 @@ function getUser (id, testDb) {
 
 function addUser (data, testDb) {
   const db = testDb || connection
-  console.log(data)
   return db('users').insert({name: data.name, email:data.email})
 }
 
+function updateUser (id, data, testDb) {
+  const db = testDb || connection
+  return db('users')
+  .where ('id',id)
+  .first()
+  .update ({name:data.name, email:data.email})
+}

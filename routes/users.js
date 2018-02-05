@@ -36,5 +36,17 @@ router.post('/', (req, res) => {
   })
 })
 
+router.put('/:id', (req, res) => {
+  const id=Number(req.params.id)
+  const user = req.body
+  db.updateUser(id, user)
+  .then (userIds => {
+    res.json({text:'Success'})
+  })
+  .catch(err => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+  })
+})
+
 module.exports = router
 
