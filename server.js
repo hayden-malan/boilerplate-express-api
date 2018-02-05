@@ -12,4 +12,3 @@ server.use(bodyParser.json())
 server.use('/users', users)
 
 module.exports = server
-
