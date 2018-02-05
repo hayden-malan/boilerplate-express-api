@@ -39,6 +39,9 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const id=Number(req.params.id)
   const user = req.body
+
+  console.log('body is:', req.body)
+
   db.updateUser(id, user)
   .then (userIds => {
     res.json({text:'Success'})

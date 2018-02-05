@@ -49,12 +49,13 @@ test('PUT /users/:id updates a user', () => {
   var newDetails = {id: 13, name: 'Great Giraffe', email: 'giraffe@giraffemail.com'}
   const expected = 'giraffe@giraffemail.com'
   return request(server)
-    .put('/users/13' + newDetails.id)
+    .put('/users/' + newDetails.id)
+    .send(newDetails)
     .expect('Content-Type', /json/)
     .expect(200)
     .then(res => {
       console.log(res.text)
-      expect(res.body.user.email).toBe(expected)
+      expect(res.body.text).toBe('Success')
     })
     .catch(err => {
       expect(err).toBeFalsy()
