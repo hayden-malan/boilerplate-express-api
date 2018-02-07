@@ -9,7 +9,6 @@ const server = express()
 server.use(bodyParser.json())
 
 // Routes
-server.use('/users', users)
+server.use('/', users)
 
 module.exports = server
-
